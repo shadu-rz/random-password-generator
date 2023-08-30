@@ -39,7 +39,7 @@ class _HomepageState extends State<Homepage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Random Secure password',
+              'Random password',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
