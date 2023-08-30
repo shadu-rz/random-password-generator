@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:random_password/constants.dart';
 
 class Homepage extends StatefulWidget {
@@ -51,7 +52,10 @@ class _HomepageState extends State<Homepage> {
               readOnly: true,
               decoration: InputDecoration(
                 suffixIcon: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    final data = ClipboardData(text: controller.text);
+                    Clipboard.setData(data);
+                  },
                   icon: const Icon(Icons.copy),
                 ),
                 hintText: 'your password will shown here',
