@@ -22,7 +22,9 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
           'Secure password',
@@ -67,7 +69,7 @@ class _HomepageState extends State<Homepage> {
                       ..removeCurrentSnackBar()
                       ..showSnackBar(snackBar);
                   },
-                  icon: const Icon(Icons.copy),
+                  icon:  Icon(Icons.copy,color: ColorConstants().primaryColor,),
                 ),
                 hintText: 'your password will shown here',
                 enabledBorder: OutlineInputBorder(
