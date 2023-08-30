@@ -55,6 +55,16 @@ class _HomepageState extends State<Homepage> {
                   onPressed: () {
                     final data = ClipboardData(text: controller.text);
                     Clipboard.setData(data);
+                    final snackBar = SnackBar(
+                      backgroundColor: ColorConstants().primaryColor,
+                      content: const Text(
+                        'Password copied',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    );
+                    ScaffoldMessenger.of(context)
+                      ..removeCurrentSnackBar()
+                      ..showSnackBar(snackBar);
                   },
                   icon: const Icon(Icons.copy),
                 ),
@@ -105,11 +115,11 @@ class _HomepageState extends State<Homepage> {
     bool hasNumbers = true,
     bool hasSpecial = true,
   }) {
-    const length = 10;
+    const length = 12;
     const letterLowerCase = 'abcdefghijklmnopqrstuvwxyz';
     const letterUpperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const numbers = '0123456789';
-    const special = '@#=+!\$&%?{}()';
+    const special = '@*~`^#=+!\$&%?{}()';
 
     String chars = '';
     if (hasLetters) chars += '$letterLowerCase$letterUpperCase';
