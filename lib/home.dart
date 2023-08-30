@@ -55,6 +55,7 @@ class _HomepageState extends State<Homepage> {
                   onPressed: () {
                     final data = ClipboardData(text: controller.text);
                     Clipboard.setData(data);
+
                     final snackBar = SnackBar(
                       backgroundColor: ColorConstants().primaryColor,
                       content: const Text(
