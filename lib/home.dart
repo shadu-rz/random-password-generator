@@ -13,6 +13,13 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   TextEditingController controller = TextEditingController();
+  TextEditingController passLengthController = TextEditingController();
+  
+
+  bool letters = true;
+  bool numbers = false;
+  bool special = false;
+
   @override
   void dispose() {
     controller.dispose();
@@ -23,30 +30,103 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: Text(
-          'Secure password',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: ColorConstants().primaryColor,
-          ),
-        ),
-      ),
+     
       body: Container(
         padding: const EdgeInsets.all(30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Random password',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: ColorConstants().secondaryColor,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Random password',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: ColorConstants().secondaryColor,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 13,
+                    ),
+                    Text(
+                      'Must contains',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: ColorConstants().primaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: numbers,
+                      onChanged: (value) {
+                        setState(() {
+                          numbers = !numbers;
+                        });
+                      },
+                    ),
+                    Text(
+                      'Numbers',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: ColorConstants().secondaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: special,
+                      onChanged: (value) {
+                        setState(() {
+                          special = !special;
+                        });
+                      },
+                    ),
+                    Text(
+                      'Special charecters',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: ColorConstants().secondaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: const EdgeInsets.only(right: 150),
+                  child: TextField(
+                    maxLength: 2,
+                    controller: passLengthController,
+                    decoration: InputDecoration(
+                      label: const Text(
+                        'Password length',
+                        style: TextStyle(
+                          color: Colors.teal,
+                        ),
+                      ),
+                      // hintText: 'Length of password',
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.teal),
+                          borderRadius: BorderRadius.circular(10)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.teal),
+                          borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                )
+              ],
             ),
             const SizedBox(height: 20),
             TextField(
@@ -69,9 +149,17 @@ class _HomepageState extends State<Homepage> {
                       ..removeCurrentSnackBar()
                       ..showSnackBar(snackBar);
                   },
-                  icon:  Icon(Icons.copy,color: ColorConstants().primaryColor,),
+                  icon: Icon(
+                    Icons.copy,
+                    color: ColorConstants().primaryColor,
+                  ),
                 ),
-                hintText: 'your password will shown here',
+                label: const Text(
+                        'your password will shown here',
+                        style: TextStyle(
+                          color: Colors.teal,
+                        ),
+                      ),
                 enabledBorder: OutlineInputBorder(
                     borderSide:
                         BorderSide(color: ColorConstants().primaryColor),
@@ -101,7 +189,11 @@ class _HomepageState extends State<Homepage> {
     return ElevatedButton(
       style: ButtonStyle(backgroundColor: backgroundColor),
       onPressed: () {
-        final password = generatePassword();
+        final password = generatePassword(
+            hasLetters: letters,
+            hasNumbers: numbers,
+            hasSpecial: special,
+            length: int.parse(passLengthController.text));
         controller.text = password;
       },
       child: const Text(
@@ -117,11 +209,12 @@ class _HomepageState extends State<Homepage> {
     bool hasLetters = true,
     bool hasNumbers = true,
     bool hasSpecial = true,
+    int length = 12,
   }) {
-    const length = 12;
+    length = length;
     const letterLowerCase = 'abcdefghijklmnopqrstuvwxyz';
-    const letterUpperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const numbers = '0123456789';
+    const letterUpperCase = 'MNOPQRSTUVWXYZABCDEFGHIJKL';
+    const numbers = '5678901234';
     const special = '@*~`^#=+!\$&%?{}()';
 
     String chars = '';
