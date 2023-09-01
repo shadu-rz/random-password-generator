@@ -1,8 +1,9 @@
-import 'dart:math';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:random_password/constants.dart';
+import 'package:random_password/generate_pass.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -189,11 +190,13 @@ class _HomepageState extends State<Homepage> {
     return ElevatedButton(
       style: ButtonStyle(backgroundColor: backgroundColor),
       onPressed: () {
-        final password = generatePassword(
-            hasLetters: letters,
+        final password = GeneratePass().generatePassword(
+          hasLetters: letters,
             hasNumbers: numbers,
             hasSpecial: special,
-            length: int.parse(passLengthController.text));
+            length: int.parse(passLengthController.text
+        ));
+        
         controller.text = password;
       },
       child: const Text(
@@ -205,26 +208,5 @@ class _HomepageState extends State<Homepage> {
     );
   }
 
-  String generatePassword({
-    bool hasLetters = true,
-    bool hasNumbers = true,
-    bool hasSpecial = true,
-    int length = 12,
-  }) {
-    length = length;
-    const letterLowerCase = 'abcdefghijklmnopqrstuvwxyz';
-    const letterUpperCase = 'MNOPQRSTUVWXYZABCDEFGHIJKL';
-    const numbers = '5678901234';
-    const special = '@*~`^#=+!\$&%?{}()';
-
-    String chars = '';
-    if (hasLetters) chars += '$letterLowerCase$letterUpperCase';
-    if (hasNumbers) chars += numbers;
-    if (hasSpecial) chars += special;
-
-    return List.generate(length, (index) {
-      final indexRandom = Random.secure().nextInt(chars.length);
-      return chars[indexRandom];
-    }).join('');
-  }
+  
 }
